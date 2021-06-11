@@ -7,16 +7,13 @@ app=Flask(__name__)
 def hello():
     return "Salutari,astronautule!", 200
 
-@app.route("/first", methods=['GET','POST','DELETE'])
+@app.route("/dog-list", methods=['GET','POST'])
 def first():
     if request.method == 'GET':
         return "a"
 
     elif request.method == 'POST':
         return "b"
-
-    elif request.method == 'DELETE':
-        return "c"
 
 if __name__ == '__main__':
     app.run()
