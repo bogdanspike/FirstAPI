@@ -63,8 +63,6 @@ class DataStore:
         self.data.append(empty_dict)
         return self.data
 
-
-
     def update_breed(self, new_breed_data):
         listed_dict = ['id', 'name', 'section', 'provisional', 'country', 'url', 'image', 'pdf']
         requested_dict = list(new_breed_data.keys())
