@@ -77,6 +77,37 @@ class DataStore:
                 k=0
         return k
 
+    # def delete_breed(self, breed_to_delete):
+    #     new_list = []
+    #     print(list(breed_to_delete.items())[0][0])
+    #     #if breed_to_delete.keys() is 'ids':
+    #     #elif breed_to_delete.keys() is 'id':
+    #     for i in range(0, len(self.data)):
+    #         key, value = list(self.data[i].items())[0]
+    #         #if key != breed_to_delete.get('id'):
+    #         if list(breed_to_delete.items())[0][0] == 'ids':
+    #             print('nu')
+    #             new_list.append(self.data[i])
+    #         #elif key not in breed_to_delete.get('ids', []):
+    #         elif list(breed_to_delete.items())[0][0] == 'id':
+    #             print('da')
+    #             new_list.append(self.data[i])
+    #     self.data = new_list
+    def delete_breed(self, breed_to_delete):
+        new_list = []
+        if 'ids' in breed_to_delete.keys():
+            for i in range(0, len(self.data)):
+                key, value = list(self.data[i].items())[0]
+                if key not in breed_to_delete.get('ids', []):
+                    new_list.append(self.data[i])
+            self.data = new_list
+        elif 'id' in breed_to_delete.keys():
+            for i in range(0, len(self.data)):
+                key, value = list(self.data[i].items())[0]
+                if key != breed_to_delete.get('id'):
+                    new_list.append(self.data[i])
+            self.data = new_list
+
 
     @staticmethod
     def get_original_data():
@@ -110,6 +141,8 @@ def get_only_one_column(column_name):
         }
         new_list_of_json_obj.append(new_json_obj)
     return new_list_of_json_obj
+
+
 
 
 @app.route("/home")
@@ -170,9 +203,14 @@ def update_dog_list():
 @app.route("/delete-dog-breed", methods=['DELETE'])
 def delete_dog_breed():
     if request.method == 'DELETE':
-        # if type(json)
-        pass
+        ds.delete_breed(request.json)
+        return {
+            'result': 'success'
+        }, 200
+
+
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
